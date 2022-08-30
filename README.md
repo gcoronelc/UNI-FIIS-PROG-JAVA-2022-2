@@ -20,6 +20,10 @@
 - Facebook 2: https://www.facebook.com/groups/desarrollasoftware
 - Facebook 3: https://www.facebook.com/groups/bolsa.sistemas
 
+#RECURSOS UTILES
+
+- Entorno de trabajo: http://gcoronelc.blogspot.com/2020/08/jdk14apachenetbeans113.html
+
 
 # YUTUBE
 

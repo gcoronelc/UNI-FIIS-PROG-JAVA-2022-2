@@ -21,3 +21,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/Clase2/AprendiendoJava/nbproject/private/
+/Clase2/AprendiendoJava/build/
+/Clase2/AprendiendoJava/dist/
+/Clase2/Proyecto1/SueldoTrabajador/nbproject/private/
+/Clase2/Proyecto1/SueldoTrabajador/build/
