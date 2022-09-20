@@ -13,9 +13,9 @@ public class AccesoDB {
         Connection cn = null;
         // Parámetros
         String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String urlDB = "jdbc:sqlserver://localhost:1433;databaseName=EDUCA;encrypt=true;TrustServerCertificate=True;";
+        String urlDB = "jdbc:sqlserver://192.168.18.50:1433;databaseName=EDUCA;encrypt=true;TrustServerCertificate=True;";
         String user = "sa";
-        String pass = "uni";
+        String pass = "sql";
         try {
             // Conexión con la BD
             Class.forName(driver).getDeclaredConstructor().newInstance();

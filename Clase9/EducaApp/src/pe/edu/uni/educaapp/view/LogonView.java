@@ -4,6 +4,9 @@
  */
 package pe.edu.uni.educaapp.view;
 
+import javax.swing.JOptionPane;
+import pe.edu.uni.educaapp.controller.LogonController;
+
 /**
  *
  * @author Gustavo Coronel
@@ -85,9 +88,19 @@ public class LogonView extends javax.swing.JDialog {
 
       btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
       btnSalir.setText("Salir");
+      btnSalir.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSalirActionPerformed(evt);
+         }
+      });
 
       btnIngresar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
       btnIngresar.setText("Ingresar");
+      btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnIngresarActionPerformed(evt);
+         }
+      });
 
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
@@ -133,6 +146,25 @@ public class LogonView extends javax.swing.JDialog {
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
+
+   private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+      System.exit(0);
+   }//GEN-LAST:event_btnSalirActionPerformed
+
+   private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+      try {
+			// Datos
+			String usuario = txtUsuario.getText();
+			String clave = new String(txtClave.getPassword());
+			// Proceso
+			LogonController control = new LogonController();
+			control.validarUsuario(usuario, clave);
+			MainView.main(null);
+			this.dispose();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+   }//GEN-LAST:event_btnIngresarActionPerformed
 
 	/**
 	 * @param args the command line arguments
