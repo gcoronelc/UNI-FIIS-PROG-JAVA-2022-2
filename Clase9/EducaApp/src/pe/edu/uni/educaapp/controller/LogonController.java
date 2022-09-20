@@ -1,6 +1,8 @@
 package pe.edu.uni.educaapp.controller;
 
+import pe.edu.uni.educaapp.dto.EmpleadoDto;
 import pe.edu.uni.educaapp.service.LogonService;
+import pe.edu.uni.educaapp.util.Session;
 
 /**
  * @author Eric Gustavo Coronel Castillo
@@ -14,7 +16,8 @@ public class LogonController {
 	
 	public void validarUsuario(String usuario, String clave){
 		LogonService service = new LogonService();
-		service.validarUsuario(usuario, clave);
+		EmpleadoDto dto = service.validarUsuario(usuario, clave);
+		Session.put("USUARIO", dto);
 	}
 
 }

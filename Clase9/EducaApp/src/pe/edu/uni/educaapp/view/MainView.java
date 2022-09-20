@@ -4,6 +4,9 @@
  */
 package pe.edu.uni.educaapp.view;
 
+import pe.edu.uni.educaapp.dto.EmpleadoDto;
+import pe.edu.uni.educaapp.util.Session;
+
 /**
  *
  * @author Gustavo Coronel
@@ -15,6 +18,15 @@ public class MainView extends javax.swing.JFrame {
 	 */
 	public MainView() {
 		initComponents();
+		this.setLocationRelativeTo(null);
+		this.setExtendedState(MAXIMIZED_BOTH);
+		establecerTitulo();
+	}
+	
+	private void establecerTitulo(){
+		EmpleadoDto usuario = (EmpleadoDto) Session.get("USUARIO");
+		String titulo = "Educa App (Usuario:" + usuario.getUsuario() + ")";
+		this.setTitle(titulo);
 	}
 
 	/**
