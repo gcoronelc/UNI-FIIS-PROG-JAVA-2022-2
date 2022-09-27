@@ -9,7 +9,7 @@ public class CrudCursoService
         implements CrudServiceSpec<CursoDto>, RowMapper<CursoDto>{
 
     @Override
-    public CursoDto read(String codigo) {
+    public CursoDto read(int codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

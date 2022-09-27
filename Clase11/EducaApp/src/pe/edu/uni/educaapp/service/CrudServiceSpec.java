@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CrudServiceSpec<T> {
 
-    T read(String codigo);
+    T read(int codigo);
 
     List<T> readAll();
 
