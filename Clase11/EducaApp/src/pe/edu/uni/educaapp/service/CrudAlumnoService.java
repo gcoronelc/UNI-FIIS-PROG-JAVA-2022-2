@@ -14,7 +14,7 @@ public class CrudAlumnoService
     
     // Consultas base
     final String SQL_SELECT = "SELECT alu_id,alu_nombre,alu_direccion,alu_telefono,alu_email FROM ALUMNO ";
-    
+    final String SQL_INSERT = "INSERT INTO alumno(alu_id,alu_nombre,alu_direccion,alu_telefono,alu_email) VALUES(?,?,?,?,?)";
     
     private Connection cn;
     
@@ -109,7 +109,51 @@ public class CrudAlumnoService
     
     @Override
     public void insert(AlumnoDto model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        int id;
+        final String SQL_ID = "select max(alu_id) id from ALUMNO";
+        try {
+            cn = AccesoDB.getConnection();
+            cn.setAutoCommit(false);
+            // Generar el codigo
+            pstm = cn.prepareStatement(SQL_ID);
+            rs = pstm.executeQuery();
+            rs.next();
+            id = rs.getInt("id") + 1;
+            rs.close();
+            pstm.close();
+            // Insertar fila
+            pstm = cn.prepareStatement(SQL_INSERT);
+            pstm.setInt(1, id);
+            pstm.setString(2, model.getNombre());
+            pstm.setString(3, model.getDireccion());
+            pstm.setString(4, model.getTelefono());
+            pstm.setString(5, model.getEmail());
+            pstm.executeUpdate();
+            pstm.close();
+            // Final
+            model.setId(id);
+            cn.commit();
+        } catch (SQLException e) {
+            try {
+                cn.rollback(); // Cancela todos los cambios
+            } catch (Exception e1) {
+            }
+            throw new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            try {
+                cn.rollback(); // Cancela todos los cambios
+            } catch (Exception e1) {
+            }
+            String s = "Error en el proceso, intentelo mas tarde.";
+            throw new RuntimeException(s);
+        }  finally{
+            try {
+                cn.close();
+            } catch (Exception e) {
+            }
+        }
     }
     
     @Override
