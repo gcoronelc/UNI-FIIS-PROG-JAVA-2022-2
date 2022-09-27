@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 import pe.edu.uni.educaapp.db.AccesoDB;
 import pe.edu.uni.educaapp.dto.AlumnoDto;
@@ -49,7 +50,29 @@ public class CrudAlumnoService
     
     @Override
     public List<AlumnoDto> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<AlumnoDto> lista = new ArrayList<>();
+        PreparedStatement pstm;
+        ResultSet rs;
+        try {
+            cn = AccesoDB.getConnection();
+            pstm = cn.prepareStatement(SQL_SELECT);
+            rs = pstm.executeQuery();
+            while(rs.next()){
+                lista.add(mapRow(rs));
+            }
+            rs.close();
+            pstm.close();
+        } catch (SQLException e) {
+            throw  new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            throw  new RuntimeException("Error en el proceso.");
+        } finally{
+            try {
+                cn.close();
+            } catch (Exception e) {
+            }
+        }
+        return lista;
     }
     
     @Override
