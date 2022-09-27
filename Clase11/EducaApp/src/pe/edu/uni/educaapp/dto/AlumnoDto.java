@@ -32,6 +32,7 @@ public class AlumnoDto {
     }
 
     public void setNombre(String nombre) {
+        nombre = (nombre == null)?"":nombre;
         this.nombre = nombre;
     }
 

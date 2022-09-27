@@ -77,7 +77,34 @@ public class CrudAlumnoService
     
     @Override
     public List<AlumnoDto> readAll(AlumnoDto model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<AlumnoDto> lista = new ArrayList<>();
+        PreparedStatement pstm;
+        ResultSet rs;
+        String sql = "";
+        try {
+            sql = SQL_SELECT + " WHERE alu_id = IIF(?=0,alu_id,?) AND alu_nombre like CONCAT('%',?,'%')";
+            cn = AccesoDB.getConnection();
+            pstm = cn.prepareStatement(sql);
+            pstm.setInt(1, model.getId());
+            pstm.setInt(2, model.getId());
+            pstm.setString(3, model.getNombre());
+            rs = pstm.executeQuery();
+            while(rs.next()){
+                lista.add(mapRow(rs));
+            }
+            rs.close();
+            pstm.close();
+        } catch (SQLException e) {
+            throw  new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            throw  new RuntimeException("Error en el proceso.");
+        } finally{
+            try {
+                cn.close();
+            } catch (Exception e) {
+            }
+        }
+        return lista;
     }
     
     @Override
