@@ -11,13 +11,14 @@ import pe.edu.uni.educaapp.dto.AlumnoDto;
 
 public class CrudAlumnoService
         implements CrudServiceSpec<AlumnoDto>, RowMapper<AlumnoDto> {
-    
+
     // Consultas base
     final String SQL_SELECT = "SELECT alu_id,alu_nombre,alu_direccion,alu_telefono,alu_email FROM ALUMNO ";
     final String SQL_INSERT = "INSERT INTO alumno(alu_id,alu_nombre,alu_direccion,alu_telefono,alu_email) VALUES(?,?,?,?,?)";
-    
+    final String SQL_UPDATE = "UPDATE alumno SET alu_nombre=?,alu_direccion=?,alu_telefono=?,alu_email=? WHERE alu_id=?";
+
     private Connection cn;
-    
+
     @Override
     public AlumnoDto read(int codigo) {
         AlumnoDto dto = null;
@@ -30,16 +31,16 @@ public class CrudAlumnoService
             pstm = cn.prepareStatement(sql);
             pstm.setInt(1, codigo);
             rs = pstm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 dto = mapRow(rs);
             }
             rs.close();
             pstm.close();
         } catch (SQLException e) {
-            throw  new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         } catch (Exception e) {
-            throw  new RuntimeException("Error en el proceso.");
-        } finally{
+            throw new RuntimeException("Error en el proceso.");
+        } finally {
             try {
                 cn.close();
             } catch (Exception e) {
@@ -47,7 +48,7 @@ public class CrudAlumnoService
         }
         return dto;
     }
-    
+
     @Override
     public List<AlumnoDto> readAll() {
         List<AlumnoDto> lista = new ArrayList<>();
@@ -57,16 +58,16 @@ public class CrudAlumnoService
             cn = AccesoDB.getConnection();
             pstm = cn.prepareStatement(SQL_SELECT);
             rs = pstm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 lista.add(mapRow(rs));
             }
             rs.close();
             pstm.close();
         } catch (SQLException e) {
-            throw  new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         } catch (Exception e) {
-            throw  new RuntimeException("Error en el proceso.");
-        } finally{
+            throw new RuntimeException("Error en el proceso.");
+        } finally {
             try {
                 cn.close();
             } catch (Exception e) {
@@ -74,7 +75,7 @@ public class CrudAlumnoService
         }
         return lista;
     }
-    
+
     @Override
     public List<AlumnoDto> readAll(AlumnoDto model) {
         List<AlumnoDto> lista = new ArrayList<>();
@@ -89,16 +90,16 @@ public class CrudAlumnoService
             pstm.setInt(2, model.getId());
             pstm.setString(3, model.getNombre());
             rs = pstm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 lista.add(mapRow(rs));
             }
             rs.close();
             pstm.close();
         } catch (SQLException e) {
-            throw  new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         } catch (Exception e) {
-            throw  new RuntimeException("Error en el proceso.");
-        } finally{
+            throw new RuntimeException("Error en el proceso.");
+        } finally {
             try {
                 cn.close();
             } catch (Exception e) {
@@ -106,7 +107,7 @@ public class CrudAlumnoService
         }
         return lista;
     }
-    
+
     @Override
     public void insert(AlumnoDto model) {
         PreparedStatement pstm = null;
@@ -148,24 +149,57 @@ public class CrudAlumnoService
             }
             String s = "Error en el proceso, intentelo mas tarde.";
             throw new RuntimeException(s);
-        }  finally{
+        } finally {
             try {
                 cn.close();
             } catch (Exception e) {
             }
         }
     }
-    
+
     @Override
     public void update(AlumnoDto model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement pstm = null;
+        try {
+            cn = AccesoDB.getConnection();
+            cn.setAutoCommit(false);
+            // Actualizar registro
+            pstm = cn.prepareStatement(SQL_UPDATE);
+            pstm.setString(1, model.getNombre());
+            pstm.setString(2, model.getDireccion());
+            pstm.setString(3, model.getTelefono());
+            pstm.setString(4, model.getEmail());
+            pstm.setInt(5, model.getId());
+            pstm.executeUpdate();
+            pstm.close();
+            // Final
+            cn.commit();
+        } catch (SQLException e) {
+            try {
+                cn.rollback(); // Cancela todos los cambios
+            } catch (Exception e1) {
+            }
+            throw new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            try {
+                cn.rollback(); // Cancela todos los cambios
+            } catch (Exception e1) {
+            }
+            String s = "Error en el proceso, intentelo mas tarde.";
+            throw new RuntimeException(s);
+        } finally {
+            try {
+                cn.close();
+            } catch (Exception e) {
+            }
+        }
     }
-    
+
     @Override
     public void delete(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public AlumnoDto mapRow(ResultSet rs) throws SQLException {
         AlumnoDto dto = new AlumnoDto();
