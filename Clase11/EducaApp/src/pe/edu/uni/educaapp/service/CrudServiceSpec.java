@@ -14,5 +14,5 @@ public interface CrudServiceSpec<T> {
 
     void update(T model);
 
-    void delete(String codigo);
+    void delete(int codigo);
 }

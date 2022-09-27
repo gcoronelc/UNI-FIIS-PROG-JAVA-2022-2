@@ -16,6 +16,7 @@ public class CrudAlumnoService
     final String SQL_SELECT = "SELECT alu_id,alu_nombre,alu_direccion,alu_telefono,alu_email FROM ALUMNO ";
     final String SQL_INSERT = "INSERT INTO alumno(alu_id,alu_nombre,alu_direccion,alu_telefono,alu_email) VALUES(?,?,?,?,?)";
     final String SQL_UPDATE = "UPDATE alumno SET alu_nombre=?,alu_direccion=?,alu_telefono=?,alu_email=? WHERE alu_id=?";
+    final String SQL_DELETE = "DELETE FROM alumno WHERE alu_id=?";
 
     private Connection cn;
 
@@ -196,8 +197,37 @@ public class CrudAlumnoService
     }
 
     @Override
-    public void delete(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void delete(int codigo) {
+        PreparedStatement pstm = null;
+        try {
+            cn = AccesoDB.getConnection();
+            cn.setAutoCommit(false);
+            // Actualizar registro
+            pstm = cn.prepareStatement(SQL_DELETE);
+            pstm.setInt(1, codigo);
+            pstm.executeUpdate();
+            pstm.close();
+            // Final
+            cn.commit();
+        } catch (SQLException e) {
+            try {
+                cn.rollback(); // Cancela todos los cambios
+            } catch (Exception e1) {
+            }
+            throw new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            try {
+                cn.rollback(); // Cancela todos los cambios
+            } catch (Exception e1) {
+            }
+            String s = "Error en el proceso, intentelo mas tarde.";
+            throw new RuntimeException(s);
+        } finally {
+            try {
+                cn.close();
+            } catch (Exception e) {
+            }
+        }
     }
 
     @Override

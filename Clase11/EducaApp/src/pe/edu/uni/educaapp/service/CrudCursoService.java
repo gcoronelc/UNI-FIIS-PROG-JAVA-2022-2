@@ -34,7 +34,7 @@ public class CrudCursoService
     }
 
     @Override
-    public void delete(String codigo) {
+    public void delete(int codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
