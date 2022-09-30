@@ -40,6 +40,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Tablas"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuTablasAlumnos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Alumnos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuTablasAlumnosActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

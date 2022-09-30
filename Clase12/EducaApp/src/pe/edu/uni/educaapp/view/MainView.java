@@ -46,6 +46,7 @@ public class MainView extends javax.swing.JFrame {
         menuProcesos = new javax.swing.JMenu();
         menuProcesosMatricula = new javax.swing.JMenuItem();
         menuTablas = new javax.swing.JMenu();
+        menuTablasAlumnos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,6 +77,15 @@ public class MainView extends javax.swing.JFrame {
         menuBar.add(menuProcesos);
 
         menuTablas.setText("Tablas");
+
+        menuTablasAlumnos.setText("Alumnos");
+        menuTablasAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTablasAlumnosActionPerformed(evt);
+            }
+        });
+        menuTablas.add(menuTablasAlumnos);
+
         menuBar.add(menuTablas);
 
         setJMenuBar(menuBar);
@@ -101,6 +111,10 @@ public class MainView extends javax.swing.JFrame {
     private void menuProcesosMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProcesosMatriculaActionPerformed
         mostrarForm(ProcMatriculaView.class);
     }//GEN-LAST:event_menuProcesosMatriculaActionPerformed
+
+    private void menuTablasAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTablasAlumnosActionPerformed
+        mostrarForm(MantAlumnosView.class);
+    }//GEN-LAST:event_menuTablasAlumnosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +159,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenu menuProcesos;
     private javax.swing.JMenuItem menuProcesosMatricula;
     private javax.swing.JMenu menuTablas;
+    private javax.swing.JMenuItem menuTablasAlumnos;
     // End of variables declaration//GEN-END:variables
 
     private void mostrarForm(Class<?> aClass) {
