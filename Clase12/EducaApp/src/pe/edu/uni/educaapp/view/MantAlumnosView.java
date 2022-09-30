@@ -1,8 +1,18 @@
 package pe.edu.uni.educaapp.view;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+//import org.apache.poi.ss.usermodel.CellType;
 import pe.edu.uni.educaapp.controller.CrudAlumnoController;
 import pe.edu.uni.educaapp.dto.AlumnoDto;
 import pe.edu.uni.educaapp.util.Mensaje;
@@ -31,6 +41,12 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnBuscar1 = new javax.swing.JButton();
+        btnBuscar2 = new javax.swing.JButton();
+        btnBuscar3 = new javax.swing.JButton();
+        btnExportarExcel = new javax.swing.JButton();
+        btnBuscar5 = new javax.swing.JButton();
+        btnBuscar6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
@@ -61,6 +77,54 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/edu/uni/educaapp/imagenes/nuevo.png"))); // NOI18N
+        btnBuscar1.setToolTipText("Nuevo empleado");
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
+            }
+        });
+
+        btnBuscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/edu/uni/educaapp/imagenes/editar.png"))); // NOI18N
+        btnBuscar2.setToolTipText("Editar empleado seleccionado");
+        btnBuscar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar2ActionPerformed(evt);
+            }
+        });
+
+        btnBuscar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/edu/uni/educaapp/imagenes/tacho.png"))); // NOI18N
+        btnBuscar3.setToolTipText("Eliminar empleado seleccionado");
+        btnBuscar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar3ActionPerformed(evt);
+            }
+        });
+
+        btnExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/edu/uni/educaapp/imagenes/excel.png"))); // NOI18N
+        btnExportarExcel.setToolTipText("Exportar a excel");
+        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelActionPerformed(evt);
+            }
+        });
+
+        btnBuscar5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/edu/uni/educaapp/imagenes/pdf.png"))); // NOI18N
+        btnBuscar5.setToolTipText("Exportar a PDF");
+        btnBuscar5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar5ActionPerformed(evt);
+            }
+        });
+
+        btnBuscar6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/edu/uni/educaapp/imagenes/salir.png"))); // NOI18N
+        btnBuscar6.setToolTipText("Cerrar el formulario.");
+        btnBuscar6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -76,7 +140,19 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExportarExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +167,13 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExportarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -138,7 +220,7 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -193,9 +275,68 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void btnBuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscar2ActionPerformed
+
+    private void btnBuscar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscar3ActionPerformed
+
+    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
+        if (lista == null || lista.isEmpty()) {
+           return;
+       }
+       try {
+           // Creación del libro
+           String plantilla = "/pe/edu/uni/educaapp/plantillas/REPORTE-ALUMNOS.xls";
+           InputStream isPlantilla = getClass().getResourceAsStream(plantilla);
+           POIFSFileSystem fs = new POIFSFileSystem(isPlantilla);
+           HSSFWorkbook objLibro = new HSSFWorkbook(fs, true);
+           // Accedes la hoja
+           HSSFSheet hoja = objLibro.getSheetAt(0);
+           // Cargar los datos a la hoja
+           int numFila = 3;
+           HSSFRow objFila;
+           for (AlumnoDto model : lista) {
+               numFila++;
+               objFila = hoja.createRow(numFila);
+               crearCeldaEntera(objFila, 0, model.getId());
+               crearCeldaCadena(objFila, 1, model.getNombre());
+               crearCeldaCadena(objFila, 2, model.getTelefono());
+               crearCeldaCadena(objFila, 3, model.getEmail());
+           }
+           // Se vuelca la información a un archivo.
+           FileOutputStream fileOut = new FileOutputStream("E://Archivos//LISTA_ALUMNOS.xls");
+           objLibro.write(fileOut);
+           fileOut.close();
+           System.out.println("Todo ok.");
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+    }//GEN-LAST:event_btnExportarExcelActionPerformed
+
+    private void btnBuscar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscar5ActionPerformed
+
+    private void btnBuscar6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscar6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscar1;
+    private javax.swing.JButton btnBuscar2;
+    private javax.swing.JButton btnBuscar3;
+    private javax.swing.JButton btnBuscar5;
+    private javax.swing.JButton btnBuscar6;
+    private javax.swing.JButton btnExportarExcel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -217,5 +358,28 @@ public class MantAlumnosView extends javax.swing.JInternalFrame {
             };
             tabla.addRow(rowData);
         }
+    }
+    
+    // Creación de celdas
+    private void crearCeldaCadena(HSSFRow fila, int columna, String dato) {
+        //HSSFCell celda = fila.createCell(columna, CellType.STRING);
+        HSSFCell celda = fila.createCell(columna);
+        celda.setCellValue(dato);
+    }
+
+    private void crearCeldaEntera(HSSFRow fila, int columna, int dato) {
+        HSSFCell celda = fila.createCell(columna);
+        HSSFCellStyle style = fila.getSheet().getWorkbook().createCellStyle();
+        style.setDataFormat(HSSFDataFormat.getBuiltinFormat("0"));
+        celda.setCellStyle(style);
+        celda.setCellValue(dato);
+    }
+
+    private void crearCeldaDecimal(HSSFRow fila, int columna, double dato) {
+        HSSFCell celda = fila.createCell(columna);
+        HSSFCellStyle style = fila.getSheet().getWorkbook().createCellStyle();
+        style.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+        celda.setCellStyle(style);
+        celda.setCellValue(dato);
     }
 }
